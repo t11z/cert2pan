@@ -8,7 +8,6 @@ APIKEY="******"
 
 for dir in /usr/syno/etc/certificate/_archive/*/;
 do
-        echo ${dir}
         CERTIFICATE_PATH=${dir}
         CERTIFICATE_NAME=$(openssl x509 -noout -subject -in ${CERTIFICATE_PATH}/fullchain.pem | cut -d = -f 3 | sed -e 's/\./-/g')
         CERTIFICATE_FILE="/tmp/cert-$(uuidgen).tmp"
@@ -18,8 +17,6 @@ do
 
         # send certificate and private key to firewall
         curl -k -F "file=@$CERTIFICATE_FILE" "$FIREWALL/api?key=$APIKEY&type=import&category=keypair&certificate-name=$CERTIFICATE_NAME&format=pem&passphrase=123456"
-
-        echo ""
 
         rm $CERTIFICATE_FILE
 done
