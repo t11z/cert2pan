@@ -6,9 +6,8 @@ APIKEY="******"
 
 ##
 
-for dir in /usr/syno/etc/certificate/_archive/*/;
+for CERTIFICATE_PATH in /usr/syno/etc/certificate/_archive/*/;
 do
-        CERTIFICATE_PATH=${dir}
         CERTIFICATE_NAME=$(openssl x509 -noout -subject -in ${CERTIFICATE_PATH}/fullchain.pem | cut -d = -f 3 | sed -e 's/\./-/g')
         CERTIFICATE_FILE="/tmp/cert-$(uuidgen).tmp"
 
